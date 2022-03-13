@@ -2,11 +2,11 @@
 Application := "BeamNG.drive "
 Gui Font, s9, Segoe UI
 Gui Add, Button, x280 y58 w80 h23 , Exit
-Gui Add, Button, x24 y58 w80 h23 gInstall, Install
-Gui Add, Button, x136 y58 w112 h23 gFSN, Go Fullscreen Now
-Gui Add, Text, x16 y8 w357 h50, Install will provide a desktop icon that can replace`nyour game shortcut. You can also import the exe to Steam. 
+Gui Add, Button, x24 y58 w80 h23 gInstall, ReInstall
+Gui Add, Button, x136 y58 w112 h23 gFSN, Go Fullscreen
+Gui Add, Text, x16 y8 w357 h50, This will boot with BeamNG. Click Go Fullscreen `nor "R CTRL" to return to Beamng fullscreen at anytime and place.  
 Gui Show, w384 h110, BMNG Fullscreen Fix
-;WinSet, AlwaysOnTop,, BMNG Fullscreen Fix,
+WinSet, AlwaysOnTop,, BMNG Fullscreen Fix,
 Return
 
 
@@ -19,6 +19,14 @@ Return
 
 Install:
 {	
+	MsgBox 0x1, Are you sure you'd like to reinstall?, Reinstall can help with updates`, or if you have moved files. 
+
+IfMsgBox If MsgBox Cancel, 
+{
+return
+}
+else 
+{
 	SetWorkingDir %A_ScriptDir%
 	gameusualdir := "C:\Program Files (x86)\Steam\steamapps\common\BeamNG.drive\BeamNG.drive.exe"
 	MsgBox, Please locate the game exe for Beamng.Drive 
@@ -31,12 +39,13 @@ Install:
 ;        }
 	Firsthalf := "\BeamNG.drive\0.24\settings\logfile.txt"
 	loglocal := LocalAppData Firsthalf
-  ; write game location to local app data and settings  
+  ; write game location to local app data and settings 
+	MsgBox, %loglocal%
+	MsgBox, %FullGameDirectory%
 	FileDelete, %loglocal%
 	FileAppend, %FullGameDirectory%, %loglocal%
 	run, setup.bat
-	Sleep, 3000
-	MsgBox, Once the Command Terminal closes, you have installed and should have a new desktop icon. You can now import the desktop icon as a non-steam game to your steam library. 
+}
 }
 return
 
@@ -58,7 +67,7 @@ FSN:
 }
 return
 
-~End::
+~RCtrl::
 ControlFocus,, %Application%
 Sleep, 500
 ControlSend,, {Alt Down}{Enter}{Alt Up}, %Application%
