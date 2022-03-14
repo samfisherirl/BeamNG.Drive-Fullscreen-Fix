@@ -1,4 +1,4 @@
-# BeamNG.Drive-Fullscreen-Fix
+# BeamNG.Drive-Fullscreen-AutoFix
 BeamNG.Drive Fullscreen Fix
 
 
